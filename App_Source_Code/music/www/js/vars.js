@@ -38,7 +38,7 @@ var bottomMenu = "<div id='bottomMenu'> \
 var moodTrackerDiv = "#moodTracker";
 var moodTrackerWrapperDiv = "#moodTrackerWrapper";
 var cupTopOffset = 7;
-var testing = true;
+var testing = false;
 //var sessionGoals = ["inspiration", "relaxation", "sleep"];
 
 function getCurrentDate() {

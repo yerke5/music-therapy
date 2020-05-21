@@ -246,7 +246,7 @@
 										alert("Either the username or password you entered is/are wrong. Please try again.");
 										$(".overlay").fadeOut(500);
 									});
-								});
+								}, "If you are a new user, please think of a username. It's extremely important that do not use any special characters (e.g. emojis, #@!, etc.) or spaces. Otherwise, welcome back! Please enter your existing username and password.");
 							} else {
 								// verify credentials
 								RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
