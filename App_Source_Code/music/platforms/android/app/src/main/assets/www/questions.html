@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<title>Music Therapy App</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/questions.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+	</head>
+	<body>
+		<!--<div id="menuBtn">
+			<span class='glyphicon glyphicon-align-justify' />
+		</div>-->
+		<div id='sideMenuOverlay'></div>
+		<div id='sideMenu'>
+			<a style='margin-top: 80px;' id='welcomePageBtn'>Welcome Page</a>
+			<a id='introSurveyBtn' href='questions.html'>Start Questionnaire Again</a>
+		</div>
+		<div class="row">
+			<div id="question" class="col-xs-10 col-xs-offset-1">
+			</div>
+		</div>
+		<script src="js/jquery.js"></script>
+		<script src="cordova.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src='js/core.min.js'></script>
+		<script src='js/sha256.min.js'></script>
+		<script src="js/vars.js"></script>
+		<script src="js/LocalDatabaseHandler.js"></script>
+		<script src="js/MessageHandler.js"></script>
+		<script src="js/introQuestions.js"></script>
+		<script src="js/RemoteDatabaseHandler.js"></script>
+		<script src='js/ThemeHandler.js'></script>
+		<script src='js/sideMenu.js'></script>
+		<script>						
+			$(document).ready(function(){
+				function final(userID, encryptedPassword) {
+					$('.overlay').fadeOut('fast');
+					$("#usernameForm").hide();
+					answers.push({"key": "userID", "value": userID});
+					answers.push({"key": "password", "value": encryptedPassword});
+					showPart();
+				}
+
+				function refreshCredentials() {
+					MessageHandler.askUserID(function(userID, password) {
+						//RemoteDatabaseHandler.getUserInfo(userID, password)
+						LocalDatabaseHandler.insert("userID", userID, function() {
+							var encryptedPassword = sha256(password);
+							LocalDatabaseHandler.insert("password", encryptedPassword, function() {
+								final(userID, encryptedPassword);
+							}, true);
+						}, true);
+					}, "It looks like your credentials are outdated or have been erased. Please enter them again.");
+				}
+
+				ThemeHandler.init("questions", commonElemSelectors, function() {
+					LocalDatabaseHandler.get("userID", function(results) {
+						var userIDLen = results.rows.length, i;
+						var userID = "";
+						if(userIDLen != 0) {
+							userID = results.rows.item(0).value;
+						}
+						LocalDatabaseHandler.get("encryptedPassword", function(results) {
+							var passwordLen = results.rows.length, i;
+							var encryptedPassword = "";
+							if(passwordLen != 0) {
+								encryptedPassword = results.rows.item(0).value;
+							}
+							if(userIDLen == 0 || passwordLen == 0) {
+								$('.overlay').fadeIn('fast');
+								refreshCredentials();
+							} else {
+								final(userID, encryptedPassword);
+							}
+						}); 
+					});
+				});	
+
+				
+				document.addEventListener("deviceready", onDeviceReady, false);
+
+				function onDeviceReady() {
+					document.addEventListener("backbutton", function (event) {
+				    	event.preventDefault();
+				    	prevQuestion();
+				    	console.log("Successfully bound backbutton to prevQuestion");
+				    }, false);
+				}
+			});
+		</script>
+	</body>
+</html>

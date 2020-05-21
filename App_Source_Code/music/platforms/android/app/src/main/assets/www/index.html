@@ -1,0 +1,318 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<title>Music Therapy App</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/welcome.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+		<style>
+			.overlay {
+				width: 100%;
+			    position: fixed;
+			    top: 0;
+			    bottom: 0;
+			    left: 0;
+			    background-color: #1A237E;
+			    display: none;
+			    z-index: 11;
+			}
+			.overlay img {
+			    width: 20%;
+			}
+
+			#submitBtn {
+			    margin: 0 auto;
+			    width: 50%;
+			    padding: 15px;
+			    border-radius: 5px;
+			    background-color: #90CAF9;
+			    border: none;
+			    box-shadow: 0 0 20px #ccc;
+			    /*position: absolute;
+			    left: 50%;
+			    top: 50%;
+			    transform: translate(-50%,-50%);*/
+			}
+
+			#ready {
+				margin-top: 30%;
+			    text-align: center;
+			    padding: 20px;
+			    border-radius: 5px;
+			    width: 80%;
+			    margin: 0 auto;
+			    margin-top: 30%;
+			    display: none;
+			}
+		</style>
+	</head>	
+	<body>
+		<div id="ocean"></div>
+		<div id="main">
+			<div id='wrapper'>
+				<p style='color:#000077;text-align:center;font-size:3em;font-family:Bubbler' id='welcome-text'>Welcome</p>
+				<div id="divider">
+					<img width="50%" id='greetImg' src="img/welcome.jpg" />
+				</div>
+				<div id='start-btn-wrapper'>
+					<a id="start">Start</a>
+				</div>
+			</div>
+		</div>
+		<div class="overlay">
+			<div class="main">
+				<div class="wrapper" style='text-align: center;padding: 30px;color: white;font-size: 1.3em;'>
+					<p>Please wait while we are checking your username 😊</p>
+					<br>
+					<img src='img/loader-1.gif'>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src='js/core.min.js'></script>
+		<script src='js/sha256.min.js'></script>
+		<script src='js/vars.js'></script>
+		<script src='js/RemoteDatabaseHandler.js'></script>
+		<script src='js/MessageHandler.js'></script>
+		<script src='js/LocalDatabaseHandler.js'></script>
+		<script src='js/ThemeHandler.js'></script>
+		<script src='js/waves.js'></script>
+		<script>
+			$(document).ready(function(){
+				createWaves(1, "ocean");
+				createWaves(2, "ocean");
+				commonElemSelectors['startBtn'] = "#start";
+				//document.addEventListener("deviceready", onDeviceReady, false);
+
+				function onDeviceReady() {
+					/*$.ajax({
+						url: EC2_API_URL + "/addSurveyMusicSelection",
+						type: "POST",
+						data: JSON.stringify({
+							"userID": "yerke", 
+							"prefs": [
+								{
+									"songID": "14.mp3", 
+									"liked": 1
+								}, 
+								{
+									"songID": "15.mp3", 
+									"liked": 1
+								},
+								{
+									"songID": "17.mp3", 
+									"liked": 0
+								},
+								{
+									"songID": "20.mp3", 
+									"liked": 1
+								},
+								{
+									"songID": "22.mp3", 
+									"liked": 0
+								},
+								{
+									"songID": "23.mp3", 
+									"liked": 1
+								},
+								{
+									"songID": "25.mp3", 
+									"liked": 1
+								},
+								{
+									"songID": "26.mp3", 
+									"liked": 0
+								},
+								{
+									"songID": "27.mp3", 
+									"liked": 1
+								},
+								{
+									"songID": "28.mp3", 
+									"liked": 1
+								}
+							],
+							"testAccuracy": true
+						}),
+						contentType: "application/json;charset=UTF-8",
+						crossDomain: true,
+						success: function(data) {
+							//alert("Success getting recommendations! " + JSON.stringify(data));
+							alert("Success posting data");
+							console.log(data);
+						},
+						error: function(e) {
+							alert("Error! " + e.responseText);
+							console.log(e.responseText);
+						}
+					});*/
+					/*$.ajax({
+						url: EC2_API_URL + "/testPredict",
+						type: "GET",
+						data: {userID: "dina"},
+						success: function(data) {alert("Success!"); success(data);},
+						error: function() {alert("ERROR");}
+						//error: error == null ? function(e) {console.log(e.responseText);alert(e.responseText);} : error
+					});*/
+				}
+
+				function getUserCredentials(successCallback, errorCallback) {
+					LocalDatabaseHandler.get("userID", function(results) {
+						var userIDLen = results.rows.length, i;
+						var userID = "";
+						if(userIDLen != 0) {
+							userID = results.rows.item(0).value;
+						}
+						LocalDatabaseHandler.get("encryptedPassword", function(results) {
+							var passwordLen = results.rows.length, i;
+							var encryptedPassword = "";
+							if(passwordLen != 0) {
+								encryptedPassword = results.rows.item(0).value;
+							}
+							if(userIDLen == 0 || passwordLen == 0) {
+								MessageHandler.askUserID(function(userID, password) {
+									var encryptedPassword = sha256(password);
+									RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+										LocalDatabaseHandler.insert("userID", userID, function() {
+											LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+												$("#usernameForm").hide();
+												successCallback(userID);
+											}, true);
+										}, true);
+									}, errorCallback);
+									
+								}, "User credentials in local storage are incorrect. Please enter your credentials again or log out and register again.", true);
+							} else {
+								successCallback(userID, encryptedPassword);
+							}
+						}, errorCallback);	
+					});
+				}
+
+				$('#start').click(function() {
+					LocalDatabaseHandler.get('userID', function(results) {
+						var userIDLen = results.rows.length, i;
+						var userID = "";
+						if(userIDLen != 0) {
+							userID = results.rows.item(0).value;
+						}
+						LocalDatabaseHandler.get("encryptedPassword", function(results) {
+							var passwordLen = results.rows.length, i;
+							var encryptedPassword = "";
+							if(passwordLen != 0) {
+								encryptedPassword = results.rows.item(0).value;
+							}
+							if(userIDLen == 0 || passwordLen == 0) {
+								MessageHandler.askUserID(function(userID, password) {
+									$("#usernameForm").css({"z-index":10});
+									var encryptedPassword = sha256(password);
+									console.log("askUserID(): " + userID + " " + password + " hash: " + encryptedPassword);
+									$('.overlay').fadeIn('fast');
+									RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function(data) {
+										console.log(data);
+										if(data.count > 0) {
+											console.log("insert(): The user is in AWS, so just download the data and store it in local db");
+											
+											for(var key in data.info) {
+												(function(k){
+													LocalDatabaseHandler.insert(key, data.info.key, null, true);
+												})(key);
+											}
+											LocalDatabaseHandler.insert("userID", userID, function() {
+												LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+													//$("#usernameForm").hide();
+													//$('.overlay').fadeOut('slow');
+													window.location.href = "therapy.html";
+												}, true);
+											}, true);
+										} else {
+											console.log("The user is not in AWS, so get him to the questionnaire");
+											LocalDatabaseHandler.insert("userID", userID, function() {
+												LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+													//$("#usernameForm").hide();
+													window.localStorage.setItem("userID", userID);
+													window.localStorage.setItem("newUser", "true");
+													window.location.href = "intro.html";
+												}, true);
+											}, true);
+										}
+									}, function() {
+										alert("Either the username or password you entered is/are wrong. Please try again.");
+										$(".overlay").fadeOut(500);
+									});
+								});
+							} else {
+								// verify credentials
+								RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+									window.location.href = "therapy.html";
+								}, function() {
+									alert("It looks like your previously used credentials are incorrect. You will now be logged out and redirected to a form where you can enter your new credentials. Thanks for your patience!");
+									LocalDatabaseHandler.removeAll(function() {
+										window.location.href = "index.html";
+									});
+								});
+							}
+						});
+					});
+				});
+				
+				ThemeHandler.init("index", commonElemSelectors, null);
+			});
+
+			
+			// start click handler with deletion of data
+			/*console.log("remove(): Deletion about to start");
+					LocalDatabaseHandler.remove("userID", function() {*/
+						/*console.log("get(): Trying to get user ID from local db");
+						LocalDatabaseHandler.get('userID', function(results) {
+							var len = results.rows.length, i; 
+							// if there is no username in local db
+							if(len == 0) {	
+								console.log("askUserID(): There's no user ID, so ask for username");
+								// check if the user is new by asking their username
+								MessageHandler.askUserID(function(username) {
+									//var username = $('#usernameInput').val();
+									console.log("getUserInfo(): Trying to get info from AWS");
+									RemoteDatabaseHandler.getUserInfo(username, function(data) {
+										// if the user is in the db, then just download the data
+										if(data.count > 0) {
+											console.log("insert(): The user is in AWS, so just download the data and store it in local db");
+											
+											for(var key in data.info) {
+												(function(k){
+													LocalDatabaseHandler.insert(key, data.info.key, null, true);
+												})(key);
+											}
+											LocalDatabaseHandler.insert("userID", username, function(){
+												window.location.href = "therapy.html";
+											}, true);
+										} else {
+											// otherwise, it means that the user hasn't taken the questionnaire yet
+											/*$('#start').on('click', function(){
+												window.location.href = "intro.html";
+											});
+											LocalDatabaseHandler.insert("userID", username, function() {
+												window.localStorage.setItem("userID", username);
+												window.localStorage.setItem("newUser", "true");
+												window.location.href = "intro.html";
+											}, true);
+										}
+									});
+								});
+							} else {
+								// take me straight to therapy
+								$('#start').on('click', function(){
+									window.location.href = "therapy.html";
+								});
+							}
+						});
+					//});*/
+		</script>
+	</body>
+</html>

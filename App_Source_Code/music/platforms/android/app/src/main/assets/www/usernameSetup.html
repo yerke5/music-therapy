@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<title>Music Therapy App</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/welcome.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	</head>	
+	<body>
+		<div id="statusUpdateDiv"></div>
+		
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src='js/vars.js'></script>
+		<script src='js/RemoteDatabaseHandler.js'></script>
+		<script src='js/ThemeHandler.js'></script>
+		<script src='js/MessageHandler.js'></script>
+		<script src='js/LocalDatabaseHandler.js'></script>
+		<script>
+			$(document).ready(function(){	
+				MessageHandler.askUserID(function() {
+					var username = $('#usernameInput').val();
+					console.log("getUserInfo(): Trying to get info from AWS");
+					RemoteDatabaseHandler.getUserInfo(username, function(data) {
+						// if the user is in the db, then just download the data
+						if(data.count > 0) {
+							console.log("insert(): The user is in AWS, so just download the data and store it in local db");
+							
+							for(var key in data.info) {
+								(function(k){
+									LocalDatabaseHandler.insert(key, data.info.key, null, true);
+								})(key);
+							}
+							LocalDatabaseHandler.insert("userID", username, function(){
+								window.localStorage.setItem("userID", username);
+								window.location.href = "therapy.html";
+							}, false);
+						} else {
+							// otherwise, it means that the user hasn't taken the questionnaire yet
+							window.location.href = "newUsernameInfo.html";
+						}
+					});
+				});			
+				
+				
+			});
+		</script>
+	</body>
+</html>

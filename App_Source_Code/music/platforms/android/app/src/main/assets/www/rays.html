@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/stats.css" />
+	</head>
+	<body>
+		<div id="container">
+			<!-- lines -->
+			<div id="lines"style="position:relative;height:300px;">
+				
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			/*var box = $('.ray_box');
+			var numRays = 15;
+			var rayToSpaceRatio = 0.5;
+			var angle = 360 / numRays * rayToSpaceRatio;
+			var sunRadius = 100;
+			var html = "";
+			for(var i = 0; i < numRays; i++) {
+				html = '<div class="ray ray' + (i + 1) + '"></div>';
+				box.append(html);
+				$('.ray' + (i + 1)).css({"height": "10px", "width": "10px", "top": ((-1) * sunRadius + 5 * i) + "px", "left": (5 * i) + "px", "transform": "rotate(" + (angle * i) + "deg)", "background-color": "pink"});
+			}*/
+			// draw lines
+			var numLines = 30;
+			var box = $('#lines');
+			var marginRight = 10;
+			var barWidth = 1;
+			var maxHeight = 250;
+			var minHeight = 10;
+			for(var i = 0; i < numLines; i++) {
+				box.append("<div class='bulb' id='bulb" + (i + 1) + "'></div>");
+				$('#bulb' + (i + 1)).css({"height": getRandHeight(minHeight, maxHeight) + "px", "width": barWidth + "px", "position": "absolute", "left": (barWidth + marginRight) * (i + 1) + "px", "top": 0});
+			}
+			
+			function getRandHeight(minHeight, maxHeight) {
+				return Math.random() * maxHeight + minHeight;
+			}
+		</script>
+	</body>
+</html>

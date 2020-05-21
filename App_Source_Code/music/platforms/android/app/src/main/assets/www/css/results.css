@@ -1,0 +1,147 @@
+/*#banner {
+  width: 60%;
+  height: 550px;
+  position: relative;
+  background: #fff;
+  border-radius: 10%;
+  overflow: hidden;
+  border:1px solid #ccc;
+  margin: 0 auto
+}
+#banner::before {
+  content: '';
+  position: absolute;
+  background: #04ACFF;
+  width: 100%;
+  bottom: 0;
+  animation: wipe 5s cubic-bezier(.2,.6,.8,.4) forwards;
+}
+@keyframes wipe {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+#glass {
+	width: 60%;
+	height: 250px;
+	position: relative;
+	//background: url("../img/glass.svg");
+	border-radius: 7%;
+	overflow: hidden;
+	border:1px solid #ccc;
+	margin: 0 auto;
+	margin-bottom: 10%;
+	font-family: Raleway
+}
+
+#water {
+	content: '';
+	position: absolute;
+	background: #7ecef4;#04ACFF;
+	width: 100%;
+	bottom: 0;
+}*/
+
+#desc h1 {
+	font-family: Quesha;
+	color: #000077;
+	font-size:36px;
+	line-height:25px
+}
+
+#desc {
+	margin-top: 30%;
+	margin-bottom: 5%;
+	text-align: center
+}
+
+#helpfulSessionPercentWrapper {
+	position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#oval {
+  border-radius:80%;
+  width:148px;
+  height:30px;
+  background-color:transparent;
+  border:1px solid #b8b8b8;
+  position:absolute;
+  top:-15px;
+  z-index:2;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+#oval2 {
+  border-radius:80%;
+  width:148px;
+  height:30px;
+  background-color:#81D4FA;
+  border-bottom:1px solid #b8b8b8;
+  position:absolute;
+  bottom:-15px;
+  z-index:100;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+#banner {
+    border-radius: 10px;
+    width: 148px;
+    height: 200px;
+    background: #fff;
+    border:1px solid #b8b8b8;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    border-top:0;
+    border-bottom:0;
+    margin:0 auto;
+    border-radius:0;
+}
+#banner .fill {
+    animation-name: fillAction;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(.2, .6, .8, .4);
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+#banner #waveShape {
+    animation-name: waveAction;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 2.5s;
+    width:300px;
+    height: 150px;
+    fill: #81D4FA;
+}
+/*@keyframes fillAction {
+    0% {
+        transform: translate(0, 150px);
+    }
+    100% {
+        transform: translate(0, 20px);
+    }
+}*/
+@keyframes waveAction {
+    0% {
+        transform: translate(-150px, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+#cupWrapper {
+	margin: 0 auto;
+    text-align: center;
+    position: relative;
+    margin-top: 25px;
+}

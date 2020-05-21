@@ -1,0 +1,1181 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<title>Music Therapy App</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="css/cards.css" type="text/css">
+		<link rel="stylesheet" href="css/therapy.css" type="text/css">
+		<link rel="stylesheet" href="css/player.css" type="text/css">
+		<link rel="stylesheet" href="css/style.css" type="text/css">
+		<link rel="stylesheet" href="css/welcome.css" type="text/css">
+		<link rel="stylesheet" href="css/chartist.min.css" type="text/css">
+		<link rel="stylesheet" href="css/questions.css" type="text/css">
+	</head>	
+	<body>
+		<div id="top">
+			<!--<span style='margin-left:10px;font-size:2.5em;color:#000' onclick='$("#side-menu").animate({"width": "150px"})'>&#9776;</span>-->
+			<button style='z-index:4;'class="lines-button lines"><span></span></button>
+		</div>
+
+		<div id='sideMenuOverlay'></div>
+		<div id='sideMenu'>
+			<a style='margin-top: 80px;' id='sideMenuRcmdBtn' data='recommendedPage' pageName='recommendedBtn'><span class='glyphicon glyphicon-star'></span> Recommended</a>
+			<a id='sideMenuLibBtn' data='libraryPage' pageName='libraryBtn'><span class='glyphicon glyphicon-music'></span> Library</a>
+			<a id='sideMenuStatsBtn' data='statsPage' pageName='statsBtn'><span class='glyphicon glyphicon-stats'></span> Stats</a>
+			<a id='sideMenuCstmBtn' data='customisationPage' pageName='customisationBtn'><span class='glyphicon glyphicon-edit'></span> Customisation</a>
+			<a id='introSurveyBtn' onclick="window.localStorage.setItem('prevPage', 'therapy.html');" href='questions.html'><span class='glyphicon glyphicon-pencil'></span>Update questionnaire answers</a>
+			<a id='changeUsernameBtn'><span class='glyphicon glyphicon-log-out'></span>Logout</a>
+		</div>
+		<!--<div id="menuBtn">
+			<span class='glyphicon glyphicon-align-justify' />
+		</div>-->
+		
+		<div id='libraryPage'>
+			<!-- search bar -->
+			<div class="row" style='position: relative;z-index: 2;min-height:120px'>
+				<div id="search-wrapper">
+					<div>
+						<span id="search-icon" class="glyphicon glyphicon-search"></span>
+						<input placeholder='Search' type="search" id="searchBar" />
+						<span id='clearSearchBarBtn' class="glyphicon glyphicon-remove" onclick='$("#searchBar").val("");$("#searchResults").fadeOut("fast");$("#searchResults").html("");$("#clearSearchBarBtn").hide();'></span>
+					</div>
+					<div id="searchResults" style="width:100%">
+					</div>
+				</div>
+			</div>
+
+			<!-- search results -->
+			<!--<div class="row">
+				<div id="searchResults" class="col-xs-10"></div>
+			</div>-->
+			<!-- songs' list -->
+			<div class="row">
+				<div class="col-xs-12" style='padding:0' id='libraryContent'>
+					<div id="libraryLoadingImg" class="main" style="height:50%">
+						<div class="wrapper">
+							<img style="width:13%;display:block;margin:0 auto" class="loadingImg" src="img/loading-water2.gif" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id='preSessionQuestions'>
+			<span class='preSessionCloseBtn closeBtn glyphicon glyphicon-remove'></span>
+			<div class='row'>
+				<div class='col-xs-10 col-xs-offset-1'>
+					<div id='main'>
+						<div id='wrapper'>
+							<div id='question1'>
+								<h1 style='margin-top:15%'>What is your goal for today?</h1>
+								<p>Research shows that one of the keys to motivation is to set specific, measurable goals. Well then, let's get motivated! :)</p>
+								<table id='sessionGoals'>
+									<tr>
+										<td>
+											<div id='inspiration' class='sessionGoal'>
+												<img src='img/inspiration.jpg'>
+												<p>Inspiration</p>
+											</div>
+											
+										</td>
+										<td>
+											<div id='sleep' class='sessionGoal'>
+												<img src='img/sleep.jpg'>
+												<p>Sleep</p>
+											</div>
+										</td>
+										<td>
+											<div id='relaxation' class='sessionGoal'>
+												<img src='img/relax.jpg'>
+												<p>Relaxation</p>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<button id='sessionGoalBtn' class='button'>Next</button>
+							</div>
+							<div id='question2' style='display:none'>
+								<h1 style='margin-top:30%'>How do you feel now?</h1>
+								<p>Please slide on the glass below. The more water is in the glass, the better you feel :)</p>
+								<div id='preSessionGlassWrapper' class='sessionGlassWrapper' style='position:relative'>
+									<div id='preSessionCup' class='cup'>
+										<div id='preSessionWater' class='sessionWater'></div>
+									</div>
+								</div>
+								<button id='preSessionBtn' class='button'>Submit</button>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id='postSessionQuestions'>
+			<span class='postSessionCloseBtn closeBtn glyphicon glyphicon-remove'></span>
+			<div class='row'>
+				<div class='col-xs-10 col-xs-offset-1'>
+					<div id='main'>
+						<div id='wrapper'>
+							<h1 style='margin-top:30%'>How do you feel after the session?</h1>
+							<p>Please slide on the glass below. The more water is in the glass, the better you feel :)</p>
+							<div id='postSessionGlassWrapper' class='sessionGlassWrapper' style='position:relative'>
+								<div id='postSessionCup' class='cup'>
+									<div id='postSessionWater' class='sessionWater'></div>
+								</div>
+							</div>
+							<button id='postSessionBtn' class='button'>Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="cbtQuestions">
+			<div class="row">
+				<span class='cbtCloseBtn closeBtn glyphicon glyphicon-remove'></span>
+				<div class="col-xs-12" style="margin-bottom: 20px">
+					<div id="accord" style="width:90%;margin:0 auto">
+						<h1 style='margin-top:40%'>Cognitive-Behavioural Exercise</h1>
+						<p>Cognitive-behavioural therapy (CBT) is recognised by the scholarly community as one of the best anxiety treatments that is completely harmless. To bring you the same benefit, we are presenting you with a little CBT exercise called the ABC technique that will hopefully help you get more insight into your anxiety and help you feel better.</p>
+						<div class="accordion" id="accordionExample">
+							  <div class="card">
+							    <div class="card-header" id="headingOne">
+							      <h2 class="mb-0">
+							        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							          Part A: Activating Event
+							        </button>
+							      </h2>
+							    </div>
+
+							    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+							      <div class="card-body">
+							      		<p>
+											Did the music you listened to spur up any emotions in you? Did it bring up some memories? Can you somehow connect today's session with what is going on in your life? Please write down your throughts in the box below. Rest assured that your thoughts will never be shared with anyone and will only be accessible by you.
+										</p>
+										<textarea></textarea>
+										<br>
+										<p>
+											You should now be warmed up to dig a little deeper. Remember, you are doing this to improve yourself and bring yourself closer to the You you want to be. Just imagine being in that position and how good that feels.<br>Alright, now we would like to ask you to write down whatever is bothering you or what you think might be causing your anxiety. We know it can be hard to confront your feelings, but they are part of you, so it's better to embrace them. That way, you will feel like a burden fell off your chest. You don't have to write much, you can just write short phrases or keywords that only you will understand. For example: I got rejected by a company that I really wanted to work at.
+										</p>
+										<textarea></textarea>
+							      </div>
+							    </div>
+							  </div>
+							  <div class="card">
+							    <div class="card-header" id="headingTwo">
+							      <h2 class="mb-0">
+							        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							          Part B: Belief
+							        </button>
+							      </h2>
+							    </div>
+							    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+							      <div class="card-body">
+							        	<p>
+											This part is going to be a little more abstract, but you should be fine. Don't worry if you don't know what to say, just take your time to think through everything. You can even talk out loud if your surroundings allow that. One thing will lead to another, and eventually, you will get to the right answer. In this part, please think about the underlying belief behind your thoughts on the causes of your anxiety. For example: if the activating event A is "I got rejected by a company of my dreams", the underlying belief B might be "I feel worthless and insignificant". Go deeper than the superficial cause of your anxiety. Think about what is really bothering you and write your thoughts in the textbox below. 
+										</p>
+										<textarea></textarea>
+							      </div>
+							    </div>
+							  </div>
+							  <div class="card">
+							    <div class="card-header" id="headingThree">
+							      <h2 class="mb-0">
+							        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							          Part C: Consequence 
+							        </button>
+							      </h2>
+							    </div>
+							    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+							      <div class="card-body">
+							        	<p>
+											This is the last part of this exercise. Here, we ask you to describe how you feel as a result of A (activating event) and B (underlying belief). Do you feel depressed? Do you feel lonely? Terrified? Confused? Please write down your feelings below. If you want, you can indicate your emotion by a picking a colour in the table below. Pick any option you like. The most important thing is that you take out the most out of this experience. 
+										</p>
+										<textarea /></textarea>
+										<table id="cbtColourTable" class="colorTable" style="width:100%"></table>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+					</div>
+
+				</div>
+				<br>
+				<button id="cbtBtn" class="button" style="width:70%;font-family: Raleway !important;margin:0 auto">Move on to post-session evaluation</button>
+			</div>
+		</div>
+		
+		<!--<div id="cbtQuestions">
+			<div class='row'>
+				<div class='col-xs-10 col-xs-offset-1'>
+					<div id='main'>
+						<div id='wrapper'>
+							<span class='closeBtn glyphicon glyphicon-remove'></span>
+							<h1 style='margin-top:30%'>Cognitive-Behavioural Exercise</h1>
+							<p>Cognitive-behavioural therapy (CBT) is recognised by the scholarly community as one of the best anxiety treatments that is completely harmless. To bring you the same benefit, we are presenting you with a little CBT exercise called the ABC technique that will hopefully help you get more insight into your anxiety and help you feel better.</p>
+							<div id='cbtTable' style='position:relative'>
+								<table class='table table-striped'>
+									<th>
+										Part A: Activating Event
+									</th>
+									<tr>
+										<td>
+											<p>
+												Did the music you listened to spur up any emotions in you? Did it bring up some memories? Can you somehow connect today's session with what is going on in your life? Please write down your throughts in the box below. Rest assured that your thoughts will never be shared with anyone and will only be accessible by you.
+											</p>
+											<textarea></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>
+												You should now be warmed up to dig a little deeper. Remember, you are doing this to improve yourself and bring yourself closer to the You you want to be. Just imagine being in that position and how good that feels.<br>Alright, now we would like to ask you to write down whatever is bothering you or what you think might be causing your anxiety. We know it can be hard to confront your feelings, but they are part of you, so it's better to embrace them. That way, you will feel like a burden fell off your chest. You don't have to write much, you can just write short phrases or keywords that only you will understand. For example: I got rejected by a company that I really wanted to work at.
+											</p>
+											<textarea></textarea>
+										</td>
+									</tr>
+									<tr>
+									</tr>
+									<th>
+										Part B: Belief
+									</th>
+									<tr>
+										<td>
+											<p>
+												This part is going to be a little more abstract, but you should be fine. Don't worry if you don't know what to say, just take your time to think through everything. You can even talk out loud if your surroundings allow that. One thing will lead to another, and eventually, you will get to the right answer. In this part, please think about the underlying belief behind your thoughts on the causes of your anxiety. For example: if the activating event A is "I got rejected by a company of my dreams", the underlying belief B might be "I feel worthless and insignificant". Go deeper than the superficial cause of your anxiety. Think about what is really bothering you and write your thoughts in the textbox below. 
+											</p>
+											<textarea style="padding:10px"></textarea>
+										</td>
+									</tr>
+									<tr>
+									</tr>
+									<th>
+										Part C: Consequences
+									</th>
+									<tr>
+										<td>
+											<p>
+												This is the last part of this exercise. Here, we ask you to describe how you feel as a result of A (activating event) and B (underlying belief). Do you feel depressed? Do you feel lonely? Terrified? Confused? Please write down your feelings below.  
+											</p>
+											<textarea style="padding:10px" /></textarea>
+											<p>
+												If you want, you can indicate your emotion by a picking a colour in the table below. Pick any option you like. The most important thing is that you take out the most out of this experience.
+											</p>
+											<table id="cbtColourTable" class="colorTable" style="width:100%"></table>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<button id='postSessionBtn' class='button'>Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>-->
+
+		<div id='sessionIntro'>
+			<div class='row'>
+				<div class='col-xs-10 col-xs-offset-1'>
+					<div id='main'>
+						<div id='wrapper'>
+							<h1>Important Message</h1>
+							<p>Please listen to this important message before you begin the session. Make sure you are in a comfortable position and there is nothing distracting you. Close your eyes, relax and be aware of your emotional state.</p>
+							<button id='sessionIntroBtn' class='button'>Ok, I understand</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id='playerWrapper'>
+			<div class="row" style='position:relative'>
+				<div class="col-xs-12" style='padding:0'>
+					<div id='main'>
+						<div id='wrapper' class="playerContentWrapper">
+							<!--<button id='collapseBtn' onclick="console.log('collapseBtn was clicked');$('.playerContentWrapper').children().hide();$('#playerWrapper').animate({'height':'10%', 'top':'80%', 'bottom':'10%'});$('#collapsedPlayer').show();"><span style="color:white" class='glyphicon glyphicon-menu-down'></span></button>
+							<div id="collapsedPlayer">
+								<div class="main">
+									<div class="wrapper">
+										<button id='collapsedPlayBtn'><span class='glyphicon glyphicon-play'></span></button>
+									</div>
+								</div>
+							</div>-->
+							<div id="playerContent">
+								<div id='overlay'></div>
+								<!--<div id='background-video' onclick='console.log("background-video div was clicked");$("#player").fadeIn(500);$("#overlay").fadeIn();'>
+									<video autoplay muted loop id="myVideo">
+									  <source src="video/water.mp4" type="video/mp4">
+									</video>
+								</div>-->
+								<div id='player' style='position:relative'>
+									<!--<img id='back' src='img/back.png' onclick='$("#player").fadeOut(1000);'/>-->
+									<!--<button id='prevBtn'><span class='glyphicon glyphicon-backward'></span></button>-->
+									<img id='playBtn' src='img/play-water.svg'/>
+									<p id='songTitleText'>Song Title</p>
+									<div id='playerBarWrapper'>
+										<p id='curTime'>00:00</p>
+										<div id='progressBarWrapper'>
+											<div id='progressBar' style='position:relative'>
+												<div id='loadedBar'></div>
+												<div id='preloadedBar'></div>
+												<div id="slider"></div>
+											</div>
+										</div>
+										<p id='duration'>00:00</p>
+									</div>
+									<div id='playerBtnsWrapper'>
+										<button id='closeBtn'><span class='glyphicon glyphicon-remove'></span></button>
+										<button id='prevBtn' style='padding:30px'><span class='glyphicon glyphicon-backward'></span></button>
+										<button id='nextBtn' style='padding:30px'><span class='glyphicon glyphicon-forward'></span></button>
+										<button id='reflectionBtn' onclick="$('#emotions').slideDown(500)"><span class='glyphicon glyphicon-stats'></span></button>
+									</div>
+									<button class="button" id="completeSessionBtn" onclick="closePlayer();openCBT()">Finish Session</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="emotions" >
+				<h1 style="text-align:center;margin:0 auto;width:80%;margin-top:10%">Is this song helpful for your anxiety?</h1>
+				<div class="emotion" data=1>
+					<img src="img/calm.jpg" />
+					<p>Yes</p>
+				</div>
+				<div class="emotion" data=0>
+					<img src="img/anxious.jpg" />
+					<p>No</p>
+				</div>
+				<img onclick="$('#emotions').slideUp(500)" id="closeEmotionsDiv" src="img/closeEmotionsBtn.jpg" />
+			</div>
+			<div id="feedbackThanksDiv"><p>Thanks for your feedback!😊</p></div>
+		</div>
+		
+		<div id='recommendedPage' class='currentPage'>
+			<div class='row'>
+				<div class='col-xs-12'>
+					<h1 style='margin-top:25%'>Recommended for You today</h1>
+					<div id='sessionStartDiv' style="background:url('img/wave.gif') no-repeat; background-size:cover">
+						<div class='main'>
+							<div class='wrapper'>
+								<!--<span style='display:none' id='sessionStartBtn' class='glyphicon glyphicon-play'></span>-->
+								<button style='display:none' id='sessionStartBtn'>Start Session</button>
+								<img id='recommendedLoadingImg' class='loadingImg' style="border-radius:50%;width:20%;" src="img/loading-water2.gif" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id='customisationPage'>
+			<h1 style="margin-top:20%;margin-bottom:5%">Customization</h1>
+			<div id='customThemeDiv'></div>
+		</div>
+		<div id='statsPage'>
+			<div class="row">
+			    <div class="col-xs-12">
+			    	<div class="alert alert-info" style="padding: 20px;margin-top: 5%;">
+			    		Please rest assured that your data is safe and it will never be disclosed to anyone except you. Your privacy is our top priority. Your data is properly protected.
+			    	</div>
+			    </div>
+			</div>
+			<!-- Mood Tracker -->
+			<div class='row' style="padding-bottom:40px">
+				<div class='col-xs-12'>
+					<h1 style="margin-top:0;margin-bottom:5%">Mood Tracker</h1>
+					<!-- water - rain droplets -->
+					<div id='moodTrackerWrapper'>
+						<!--<div id='cloud'>
+							<img src='img/cloud.jpg' style="width:100%" />
+						</div>
+						<div id='moodTracker'></div>-->
+
+						<div id="libraryLoadingImg" class="main" style="height:50%">
+							<div class="wrapper">
+								<img style="width:13%;display:block;margin:0 auto" class="loadingImg" src="img/loading-water2.gif" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='row' id='moodImprovementWrapper'>
+				<div class='col-xs-12'>
+					<h1 style="margin-top:10%;margin-bottom:5%">Mood Improvement</h1>
+					<div id='moodImprovement'>
+						<div id="libraryLoadingImg" class="main" style="height:50%">
+							<div class="wrapper">
+								<img style="width:13%;display:block;margin:0 auto" class="loadingImg" src="img/loading-water2.gif" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Session Frequency -->
+			<!--<div class='row'>
+				<div class='col-xs-12'>
+					<h1 style="margin-top:10%;margin-bottom:5%">Your Sessions</h1>
+					<div id='sessionTracker'></div>
+					<div id="libraryLoadingImg" class="main" style="height:50%">
+						<div class="wrapper">
+							<img style="width:13%;display:block;margin:0 auto" class="loadingImg" src="img/loading-water2.gif" />
+						</div>
+					</div>
+				</div>
+			</div>-->
+		</div>
+		<div class="overlay">
+			<div class="main">
+				<div class="wrapper" style='text-align: center;padding: 30px;color: white;font-size: 1.3em;'>
+					<p>Please wait while we are checking your username 😊</p>
+					<br>
+					<img src='img/loader-1.gif'>
+				</div>
+			</div>
+		</div>
+		
+		<script src='js/jquery.js'></script>
+		<script src='js/bootstrap.min.js'></script>
+		<script src='js/core.min.js'></script>
+		<script src='js/sha256.min.js'></script>
+		<script src='js/vars.js'></script>
+		<script src='js/AudioPlayer.js'></script>
+		<script src='js/PlaylistHandler.js'></script>
+		<script src='js/LocalDatabaseHandler.js'></script>
+		<script src='js/RemoteDatabaseHandler.js'></script>
+		<script src='js/MessageHandler.js'></script>
+		<script src='js/ChartsHandler.js'></script>
+		<script src='js/ThemeHandler.js'></script>
+		<script src='js/waves.js'></script>
+		<script src='js/sideMenu.js'></script>
+		<script src='js/chartist.min.js'></script>
+		<!--<script src="js/chartist-plugin-legend.js"></script>-->
+		<script src='js/Stats.js'></script>
+
+		<script>
+			// initialise vars
+			var elemSelectors = {
+				"player": "#player",
+				"playBtn": "#playBtn",
+				"prevBtn": "#prevBtn",
+				"nextBtn": "#nextBtn", 
+				"songTitleText": "#songTitleText",
+				"playBtnMinimized": ".playBtnMinimized",
+				"genericBtn": ".button",
+				"loadedBar": "#loadedBar",
+				"preloadedBar": "#preloadedBar",
+				"progressBar": "#progressBar",
+				"slider": "#slider",
+				"curTime": "#curTime",
+				"duration": "#duration",
+				"playerBarWrapper": "#playerBarWrapper",
+				"bottomMenu": "#bottomMenu",
+				"firstTag": ".goal",
+				"secondTag": ".genre",
+				"thirdTag": ".mood",
+				"menuBtn": "#menuBtn span",
+				"backgroundVideo": "#background-video video",
+				"playerBackground": "#playerWrapper",
+				"selectedThemeDiv": ".selectedThemeDiv",
+				"recommendedDiv": "#sessionStartDiv",
+				"loadingImg": ".loadingImg",
+				"collapsedPlayBtn": "#collapsedPlayBtn span",
+				"collapsedPlayerDiv": "#collapsedPlayer",
+				"feedbackThanksDiv": "#feedbackThanksDiv"
+			}
+			
+			var playlist = null;
+			var maxNumSongs = 10;
+			
+			$(document).ready(function() {
+				/*LocalDatabaseHandler.getAll(function(results) {
+					var html = "";
+					var len = results.rows.length;
+					for(var i = 0; i < len; i++) {
+						html += results.rows.item(i).key + "; " + results.rows.item(i).value + "<br>";
+					}
+					$("#temp").html(html);
+				});*/
+				
+				var numPages = 4;
+				var isPageLoaded = {
+					"library": false,
+					"stats": false,
+					"customisation": false,
+					"recommended": false
+				};
+
+				// load bottom menu
+				$(document.body).append($(bottomMenu));
+				
+				// initialise click handlers
+				setBtnToCurrent('recommendedBtn');
+				
+				// prepare recommended playlist
+				ThemeHandler.init("therapy", elemSelectors, function() {
+					getUserCredentials(function(userID, encryptedPassword) {
+						if(!testing) {
+							if(isFullSessionComplete()) {
+								$('#recommendedLoadingImg').hide();
+								$('#sessionStartBtn').fadeIn(500);
+								$("#sessionStartBtn").html("The session has been completed 😊");
+								$("#sessionStartBtn").unbind("click");
+							} else {
+								PlaylistHandler.getRecommendedPlaylist(userID, encryptedPassword, function(){
+									$('#recommendedLoadingImg').hide();
+									$('#sessionStartBtn').fadeIn(500);
+									console.log("buildPlaylist(): Recommended playlist was built");	
+									$('#sessionStartBtn').click(function() {
+										$('#playerWrapper').addClass("currentPage");
+										openPreSession(PlaylistHandler.playlists.recommendedPlaylist);
+									});
+									isPageLoaded.recommended = true;
+								});	
+							}
+						} else {
+							if(isFullSessionComplete()) {
+								$('#recommendedLoadingImg').hide();
+								$('#sessionStartBtn').fadeIn(500);
+								$("#sessionStartBtn").html("The session has been completed 😊");
+								$("#sessionStartBtn").unbind("click");
+							} else {
+								$('#recommendedLoadingImg').hide();
+							$('#sessionStartBtn').fadeIn(500);
+							$('#sessionStartBtn').click(function() {
+								$('#playerWrapper').addClass("currentPage");
+								openPreSession(PlaylistHandler.playlists.recommendedPlaylist);
+							});
+
+							//var testSongNames = ["Chinese-Folk.mp3", "classical.mp3", "electronic.mp3", "fast.mp3", "flute.mp3", "guitar.mp3"];
+							var testSongNames = [14, 15, 17, 20, 22, 23, 25, 26, 27, 28];
+							var testSongs = [];
+							for(var i = 0; i < testSongNames.length; i++) {
+								song = {};
+								song['index'] = i;
+								song['name'] = "Song " + i;//testSongNames[i].split(".").slice(0, -1).join(".").split("-").join(" ");
+								song['instrument'] = "piano";
+								song['genre'] = "pop";
+								song['tempo'] = "slow";
+								song['artist'] = "artist";
+								song['url'] = "../../music_temp/test/" + testSongNames[i] + ".mp3";
+								song['duration'] = 180;
+								song['id'] = testSongNames[i] + ".mp3";
+								testSongs.push(song);
+							}
+						
+							if(!("recommendedPlaylist" in PlaylistHandler.playlists)) {
+								PlaylistHandler.playlists["recommendedPlaylist"] = testSongs;
+							} 
+						
+						
+							PlaylistHandler.curPlaylist = testSongs;
+							isPageLoaded.recommended = true;
+							}
+						}				
+					}, function() {
+						alert("User credentials are wrong. Please re-enter your username and password or log out and register again.");
+						/*MessageHandler.askUserID(function(userID, password) {
+							var encryptedPassword = sha256(password);
+							RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+								LocalDatabaseHandler.insert("userID", userID, function() {
+									LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+										$("#usernameForm").hide();
+										successCallback(userID);
+									}, true);
+								}, true);
+							}, errorCallback);
+							
+						}, "User credentials are wrong. Please re-enter your username and password or log out and register again.", true);*/
+					});
+				});
+
+				// send preferences to db if there are enough of them
+				sendUpdatedPrefs();
+				
+				$('#preSessionCup').click(function(evt) {
+					var clickPoint = Math.round(((evt.clientY - $(this).offset().top) + window.pageYOffset));
+					var cupHeight = $(this).outerHeight();
+					var newValue = cupHeight - clickPoint;
+					if(newValue > cupHeight - cupTopOffset) newValue = cupHeight - cupTopOffset;
+					var newHeight = (newValue * 100 / cupHeight) + "%";
+					$('#preSessionWater').css({
+						"height": newHeight
+					});
+					console.log("preSessionCup click handler(): Pre session score:", Math.round(($('#preSessionWater').height() / ($('#preSessionCup').height() - cupTopOffset) + Number.EPSILON) * 100) / 100);
+					//console.log("Pre session score:", newHeight);
+					//cupHandler(evt, "#preSessionWater");
+				});
+				
+				$('#postSessionCup').click(function(evt) {
+					var clickPoint = Math.round(((evt.clientY - $(this).offset().top) + window.pageYOffset));
+					var cupHeight = $(this).outerHeight();
+					var newValue = cupHeight - clickPoint;
+					if(newValue > cupHeight - cupTopOffset) newValue = cupHeight - cupTopOffset;
+					var newHeight = (newValue * 100 / cupHeight) + "%";
+					$('#postSessionWater').css({
+						"height": newHeight
+					});
+					console.log("postSessionCup click handler(): Post session score:", Math.round(($('#postSessionWater').height() / ($('#postSessionCup').height() - cupTopOffset) + Number.EPSILON) * 100) / 100);
+					//console.log("Pre session score:", newHeight);
+					//cupHandler(evt, "#postSessionWater");
+				});
+				
+				$('#preSessionCup').bind("touchstart", function(evt) {
+					var touch = evt.touches[0];
+					var clickPoint = Math.round(((touch.clientY - $(this).offset().top) + window.pageYOffset));
+					var cupHeight = $(this).outerHeight();
+					var newValue = cupHeight - clickPoint;
+					if(newValue > cupHeight - 35) newValue = cupHeight - 35;
+					var newHeight = (newValue * 100 / cupHeight) + "%";
+					$('#preSessionWater').css({
+						"height": newHeight
+					});
+					//cupHandler(evt.touches[0], "#preSessionWater");
+				});
+				
+				$('#postSessionCup').bind("touchstart", function(evt) {
+					var touch = evt.touches[0];
+					var clickPoint = Math.round(((touch.clientY - $(this).offset().top) + window.pageYOffset));
+					var cupHeight = $(this).outerHeight();
+					var newValue = cupHeight - clickPoint;
+					if(newValue > cupHeight - 35) newValue = cupHeight - 35;
+					var newHeight = (newValue * 100 / cupHeight) + "%";
+					$('#postSessionWater').css({
+						"height": newHeight
+					});
+					//cupHandler(evt.touches[0], "#postSessionWater");
+				});
+				
+				$('#sessionGoalBtn').click(function() {
+					window.localStorage.setItem('sessionGoal', $('.selectedGoal').attr('id'));
+					$('#question1').hide();
+					$('#question2').fadeIn(500);
+				});
+				
+				$('.sessionGoal').click(function() {
+					$(".selectedGoal").first().removeClass("selectedGoal");
+					$(this).addClass("selectedGoal");
+				});
+				
+				$('#recommendedBtn').click(recommendedBtnClickHandler);
+				$('#sideMenuRcmdBtn').click(recommendedBtnClickHandler);
+				
+				$('#statsBtn').click(statsBtnClickHandler);
+				$('#sideMenuStatsBtn').click(statsBtnClickHandler);
+
+				
+				$('#libraryBtn').click(libraryBtnClickHandler);
+				$('#sideMenuLibBtn').click(libraryBtnClickHandler);
+
+				$('#sideMenuCstmBtn').click(customisationBtnClickHandler);
+				$('#customisationBtn').click(customisationBtnClickHandler);
+
+				$("#changeUsernameBtn").click(function() {
+					/*MessageHandler.askUserID(function(userID) {
+						console.log("askUserID(): " + userID);
+						RemoteDatabaseHandler.getUserInfo(userID, function(data) {
+									// if the user is in the db, then just download the data
+							if(data.count > 0) {
+								console.log("insert(): The user is in AWS, so just download the data and store it in local db");
+								
+								for(var key in data.info) {
+									(function(k){
+										LocalDatabaseHandler.insert(key, data.info.key, null, true);
+									})(key);
+								}
+								LocalDatabaseHandler.insert("userID", userID, function(){
+									$("#usernameForm").hide();
+									window.location.href = "therapy.html";
+								}, true);
+							} else {
+								// otherwise, it means that the user hasn't taken the questionnaire yet
+								/*$('#start').on('click', function(){
+									window.location.href = "intro.html";
+								});
+								console.log("The user is not in AWS, so get him to the questionnaire");
+								LocalDatabaseHandler.insert("userID", userID, function() {
+									$("#usernameForm").hide();
+									window.localStorage.setItem("userID", userID);
+									window.localStorage.setItem("newUser", "true");
+									window.location.href = "intro.html";
+								}, true);
+							}
+						}, function(e) {
+							alert("ERROR");
+							console.log(e.responseText);
+						});
+					}, "Please enter a new username or an existing one");*/
+					LocalDatabaseHandler.removeAll(function() {
+						alert("You have been successfully logged out. You will be redirected to the main page now.");
+						window.location.href = "index.html";
+					});
+				});
+
+				function recommendedBtnClickHandler() {
+					setBtnToCurrent($(this).attr('pageName'));
+					open($(this).attr('data'));
+					closeSideMenu();
+					if(!isPageLoaded.recommended) {
+						getUserCredentials(function(userID, encryptedPassword) {
+							PlaylistHandler.getRecommendedPlaylist(userID, encryptedPassword, function(){
+								console.log("buildPlaylist(): Recommended playlist was built");	
+								$('#recommendedLoadingImg').hide();
+								//$('#sessionStartBtn').css({"opacity":1});
+								$('#sessionStartBtn').fadeIn(500);
+								$('#sessionStartBtn').click(function() {
+									$('#playerWrapper').addClass("currentPage");
+									openPreSession(PlaylistHandler.playlists.recommendedPlaylist);
+								});
+								isPageLoaded.recommended = true;
+							});	
+						}, function() {
+							alert("User credentials are wrong. Please re-enter your username and password or log out and register again.");
+							/*MessageHandler.askUserID(function(userID, password) {
+								var encryptedPassword = sha256(password);
+								RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+									LocalDatabaseHandler.insert("userID", userID, function() {
+										LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+											$("#usernameForm").hide();
+											successCallback(userID);
+										}, true);
+									}, true);
+								}, errorCallback);
+								
+							}, "User credentials are wrong. Please re-enter your username and password or log out and register again.", true);*/
+						});
+					}
+					if(isFullSessionComplete()) {
+						$("#sessionStartBtn").html("The session has been completed 😊");
+						$("#sessionStartBtn").unbind("click");
+					}
+					//isPageLoaded.recommended = true;
+				}
+
+				function statsBtnClickHandler() {
+					setBtnToCurrent($(this).attr('pageName'));
+					open($(this).attr('data'));
+					closeSideMenu();
+					if(!isPageLoaded.stats) {
+						Stats.drawMoodTracker("#moodTrackerWrapper", 30, function() {
+							if(Stats.scores != null && Stats.scores.length > 1) {
+								$('#moodImprovementWrapper').show();
+								Stats.getMoodImprovementStats("#moodImprovement");
+								isPageLoaded.stats = true;
+							} 
+						});
+					}
+				}
+
+				function libraryBtnClickHandler() {
+					setBtnToCurrent($(this).attr('pageName'));
+					open($(this).attr('data'));
+					closeSideMenu();
+					if(!isPageLoaded.library && !testing) {
+						PlaylistHandler.getWholePlaylist(function(){
+							console.log("buildPlaylist(): Whole playlist was built");
+							$("#libraryLoadingImg").hide();
+							PlaylistHandler.drawWholePlaylist('libraryContent', function() {
+								ThemeHandler.setThemeHTML("therapy", ThemeHandler.getCurrentTheme().ID, elemSelectors);
+							});
+						});
+						isPageLoaded.library = true;
+					}
+					if(testing) {
+						$("#libraryLoadingImg").hide();
+						//var testSongNames = ["Chinese-Folk.mp3", "classical.mp3", "electronic.mp3", "fast.mp3", "flute.mp3", "guitar.mp3"];
+						var testSongNames = [14, 15, 17, 20, 22, 23, 25, 26, 27, 28];
+						var testSongs = [];
+						for(var i = 0; i < testSongNames.length; i++) {
+							song = {};
+							song['index'] = i;
+							song['id'] = testSongNames[i] + ".mp3";
+							song['name'] = "Song " + i;//testSongNames[i].split(".").slice(0, -1).join(".").split("-").join(" ");
+							song['instrument'] = "piano";
+							song['genre'] = "pop";
+							song['tempo'] = "slow";
+							song['artists'] = "artist";
+							song['url'] = "audio/test/" + testSongNames[i] + ".mp3";
+							song['duration'] = 180;
+							testSongs.push(song);
+						}
+					
+						if(!("wholePlaylist" in PlaylistHandler.playlists)) {
+							PlaylistHandler.playlists["wholePlaylist"] = testSongs;
+						} 
+					
+						PlaylistHandler.curPlaylist = testSongs;
+						PlaylistHandler.drawWholePlaylist('libraryContent', function() {
+							ThemeHandler.setThemeHTML("therapy", ThemeHandler.getCurrentTheme().ID, elemSelectors);
+						});
+					}
+				}
+
+				
+				function customisationBtnClickHandler() {
+					setBtnToCurrent($(this).attr('pageName'));
+					open('customisationPage');
+					closeSideMenu();
+					if(!isPageLoaded.customisation) {
+						var themes = ThemeHandler.themes;
+						//console.log("Trying to iterate these fuckers", themes);
+						var html = "";
+						for(var key in themes) {
+							var theme = themes[key];
+							//console.log("LOOK HERE:", theme);
+							html += "<div class='row'>" + 
+										"<div class='col-xs-12'>" +
+											"<div data='" + theme.ID + "' class='themeDiv " + ((theme.ID == ThemeHandler.getCurrentTheme().ID) ? "selectedThemeDiv' style='border:5px solid " + theme.primaryColorHex : "") + "'>" +
+												"<h1>" + theme.ID.charAt(0).toUpperCase() + theme.ID.slice(1) + "</h1>" + 
+												"<h2 style='text-align:left'>Colors</h2>" + 
+												"<table class='colorScheme'>" +
+													"<tr>" + 
+														"<td class='colorSchemeBit' style='background-color:" + theme.preloadedBarColor + "'></td>" + 
+														"<td class='colorSchemeBit' style='background-color:" + theme.primaryColorHex + "'></td>" + 
+														"<td class='colorSchemeBit' style='background-color:" + theme.sliderColor + "'></td>" + 
+														"<td class='colorSchemeBit' style='background-color:" + theme.primaryColorDark + "'></td>" +
+													"</tr>" + 
+												"</table>" + 
+												"<h2 style='margin-top:10%'>Animation</h2>" +
+												"<p>" + theme.animation + "</p>" +
+											"</div>" +
+										"</div>" + 
+									"</div>";
+						}
+						$('#customThemeDiv').html(html);
+						$('.themeDiv').click(function() {
+							$('.selectedThemeDiv').first().css({'border':0});
+							$('.selectedThemeDiv').first().removeClass('selectedThemeDiv');
+							$(this).addClass('selectedThemeDiv');
+							ThemeHandler.setThemeHTML("therapy", $(this).attr('data'), elemSelectors);
+							LocalDatabaseHandler.insert("currentThemeID", $(this).attr('data'), null, true);
+						});
+						isPageLoaded.customisation = true;
+					}
+				}
+				
+				$('.preSessionCloseBtn').click(function() {
+					open("recommendedPage");
+				});
+				
+				$('.postSessionCloseBtn').click(function() {
+					//open("playerWrapper");
+					$("#postSessionQuestions").fadeOut(500);
+					$("#playerWrapper").show();
+					
+				});
+
+				$('.cbtCloseBtn').click(function() {
+					$("#cbtQuestions").fadeOut(500);
+					$("#playerWrapper").show();					
+				});
+				
+
+				$("#collapsedPlayer").click(function(e) {
+					$('#playerWrapper').animate({'top':'0'});
+					$('.playerContentWrapper').children().show();
+					$('#collapsedPlayer').hide();
+					e.stopPropagation();
+				});
+			});
+			
+			function open(pageID) {
+				$('.currentPage').hide();
+				$('.currentPage').first().removeClass('currentPage');
+				$("#" + pageID).fadeIn(500);
+				$("#" + pageID).addClass("currentPage");
+			}
+			
+			function getUserCredentials(successCallback, errorCallback) {
+				LocalDatabaseHandler.get("userID", function(results) {
+					var userIDLen = results.rows.length, i;
+					var userID = "";
+					if(userIDLen != 0) {
+						userID = results.rows.item(0).value;
+					}
+					LocalDatabaseHandler.get("encryptedPassword", function(results) {
+						var passwordLen = results.rows.length, i;
+						var encryptedPassword = "";
+						if(passwordLen != 0) {
+							encryptedPassword = results.rows.item(0).value;
+						}
+						if(userIDLen == 0 || passwordLen == 0) {
+							MessageHandler.askUserID(function(userID, password) {
+								var encryptedPassword = sha256(password);
+								RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+									LocalDatabaseHandler.insert("userID", userID, function() {
+										LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+											$("#usernameForm").hide();
+											successCallback(userID);
+										}, true);
+									}, true);
+								}, errorCallback);
+								
+							}, "User credentials in local storage are incorrect. Please enter your credentials again or log out and register again.", true);
+						} else {
+							successCallback(userID, encryptedPassword);
+						}
+					}, errorCallback);	
+				});
+			}
+
+			function sendUpdatedPrefs() {
+				//LocalDatabaseHandler.remove("lastPrefsUpdateDate");
+				LocalDatabaseHandler.get("lastPrefsUpdateDate", function(prefsUpdateDateRows) {
+					var len = prefsUpdateDateRows.rows.length;
+					if(len == 0) {
+						LocalDatabaseHandler.getAllPrefs(function(allPrefsRows) {
+							var numPrefs = allPrefsRows.rows.length;
+							if(numPrefs != 0) {
+								console.log("No updates sent ever, so send everything");
+								var prefs = [];
+								for (var i = 0; i < numPrefs; i++){
+									prefs.push({
+										"songID": allPrefsRows.rows.item(i).songID, 
+										"liked": allPrefsRows.rows.item(i).liked
+									});
+							    }
+						    
+						    	LocalDatabaseHandler.get("userID", function(results) {
+							    	var userID = results.rows.item(0).value;
+							    	RemoteDatabaseHandler.postNewPrefs(userID, prefs, function() {
+								    	console.log("Preferences posted successfully");
+								    	LocalDatabaseHandler.insert("lastPrefsUpdateDate", getCurrentDate(), function() {
+								    		LocalDatabaseHandler.getAll(function(results) {
+								    			console.log("All UserInfo records:");
+								    			var len = results.rows.length;
+								    			for (var i=0; i<len; i++){
+													console.log(results.rows.item(i));
+											    }
+											    LocalDatabaseHandler.removeAllPrefs(function() {
+											    	console.log("Preferences were deleted successfully.");
+											    });
+								    		});
+								    	}, true);
+								    }, function(xhr, status, error) {
+										console.log("RESPONSE TEXT:")
+										console.log(xhr.responseText); 
+									});
+							    });
+						    }
+						});
+					} else {
+						console.log(prefsUpdateDateRows.rows.item(0).value + " was the last update date ");
+						LocalDatabaseHandler.getNewPrefs(
+							prefsUpdateDateRows.rows.item(0).value, 
+							function(newPrefsRows) {
+								var numPrefs = newPrefsRows.rows.length;
+								if(numPrefs != 0) {
+									var prefs = [];
+									for (var i = 0; i < numPrefs; i++){
+										prefs.push({
+											"songID": newPrefsRows.rows.item(i).songID, 
+											"liked": newPrefsRows.rows.item(i).liked
+										});
+								    }
+								    LocalDatabaseHandler.get("userID", function(results) {
+							    		var userID = results.rows.item(0).value;
+									    RemoteDatabaseHandler.postNewPrefs(userID, prefs, function() {
+									    	console.log("Preferences posted successfully");
+									    	LocalDatabaseHandler.insert("lastPrefsUpdateDate", getCurrentDate(), function() {
+									    		LocalDatabaseHandler.getAll(function(results) {
+									    			console.log("All UserInfo records:");
+									    			var len = results.rows.length;
+									    			for (var i=0; i<len; i++){
+														console.log(results.rows.item(i));
+												    }
+												    LocalDatabaseHandler.removeAllPrefs(function() {
+												    	console.log("Preferences were deleted successfully.");
+												    });
+									    		})
+									    	}, true);
+									    }, function(xhr, status, error) {
+											console.log("RESPONSE TEXT:")
+											console.log(xhr.responseText); 
+										});
+									});
+								}
+							}
+						);
+					}
+					
+				});
+			}
+
+			function sendPrefsHelper(results) {
+				var len = results.rows.length, i; 
+				if(len == 0) {
+					console.log("MusicPreferences is empty");
+				} else {
+					console.log("About to send preferences to backend:");
+					getUserCredentials(function(userID, encryptedPassword) {
+						var prefs = [];
+						for (var i=0; i<len; i++){
+							prefs.push({
+								"songID": results.rows.item(i).songID, 
+								"liked": results.rows.item(i).liked
+							});
+					    }
+					    RemoteDatabaseHandler.postNewPrefs(userID, encryptedPassword, prefs, function() {
+					    	console.log("Preferences posted successfully");
+					    	LocalDatabaseHandler.insert("lastPrefsUpdateDate", getCurrentDate(), function() {
+					    		LocalDatabaseHandler.getAll(function(results) {
+					    			console.log("All UserInfo records:");
+					    			var len = results.rows.length;
+					    			for (var i=0; i<len; i++){
+										console.log(results.rows.item(i));
+								    }
+					    		})
+					    	}, true);
+					    }, function() {
+					    	alert("ERROR POSTING NEW PREFS");
+					    });
+					}, function() {
+						alert("User credentials are wrong. Please re-enter your username and password or log out and register again.");
+						/*MessageHandler.askUserID(function(userID, password) {
+							var encryptedPassword = sha256(password);
+							RemoteDatabaseHandler.checkUserCredentials(userID, encryptedPassword, function() {
+								LocalDatabaseHandler.insert("userID", userID, function() {
+									LocalDatabaseHandler.insert("encryptedPassword", encryptedPassword, function() {
+										$("#usernameForm").hide();
+										successCallback(userID);
+									}, true);
+								}, true);
+							}, errorCallback);
+							
+						}, "User credentials are wrong. Please re-enter your username and password or log out and register again.", true);*/
+					});
+				}
+			}
+
+			var searchResSongs = [];
+			var timer = null;
+
+			$('#searchBar').on('keyup', function() {
+				if(timer) {
+				    clearTimeout(timer);
+				}
+
+				timer = setTimeout(someFunction, 200);
+				
+				function someFunction() {
+					searchResSongs = [];
+					console.log("searchResSongs:", searchResSongs);
+					// make an api call to retrieve matching songs
+					var searchPhrase = $('#searchBar').val().trim();
+					if(searchPhrase != "") {
+						$('#clearSearchBarBtn').show();
+						(function (searchPhrase) {
+						 	RemoteDatabaseHandler.getSearchResults(
+								searchPhrase, 
+								function(searchResults) {
+									var html = "<div id='topDivider'></div>";
+									if(searchResults.count == 0) {
+										html += '<p style="padding:20px;padding-bottom:0">No search results</p>';
+									} else {
+										$("#searchResults").fadeIn("fast");
+										for(var i = 0; i < searchResults.count; i++) {
+
+											var song = searchResults.songs[i];
+											var toPush = {};
+											toPush['index'] = i;
+											toPush["id"] = song["songID"];
+											toPush['name'] = song['name'];
+											toPush['artists'] = song['artists'].replace(",", ", ");
+											toPush['url'] = song['presigned-url'];
+											toPush['duration'] = song['duration'];
+
+											if("instruments" in song) {
+												toPush['instrument'] = song['instruments'].split(",")[0];
+											}
+											if("genres" in song) {
+												toPush['genre'] = song['genres'].split(",")[0];
+											}
+											//console.log(song);
+											searchResSongs.push(toPush);
+
+											html += "<div class='singleSearchResult' data='" + i + "'> \
+														<span class='glyphicon glyphicon-music'/> \
+														<div class='songNameWrapper'>" + toPush['name'] + "</div> \
+														<div> \
+															<div style='margin-left: 10%;padding-left: 10px;'> \
+																<span class='searchResLabel'>" +
+																	toPush['artists'] + 
+																"</span> \
+																<span class='searchResLabel' style='background-color:pink'>" +
+																	toPush['instrument'] + 
+																"</span> \
+															</div> \
+														</div> \
+													</div>";
+										}
+									}
+									$('#searchResults').html(html);
+									if(searchResults.count > 0) {
+										$('.singleSearchResult').on('click', function() {
+											openPlayer(searchResSongs, parseInt($(this).attr('data')), false);
+										});
+									}
+								}, 
+								function() {
+									var errorMessage = "<div class='singleSearchResult'>Sorry, there was an error retrieving search results. Please check your internet connection.</div>";
+									$('#searchResults').html(errorMessage);
+									console.log("Error retrieving results");
+								}
+							);
+						})(searchPhrase);
+					} else {
+						$('#searchResults').html("");
+					}
+				}
+			});
+
+			
+
+			function prepareColourTable() {
+				colors = ['7ecef4', 'FFCCCC', 'bae628', 'ffffff', '000000', 'cccccc', '6b301f', 'e33d77', '95adf5', 'ffbf00'];
+				var open = false;
+				var html = "";
+				for(var j = 0; j < colors.length; j++) {
+					if(j % 3 == 0) {
+						html += '<tr>';
+						open = true;
+					}
+					html += '<td class="color-cell-td">' + 
+					'<div onclick="$(\'.selected-cell\').first().removeClass(\'selected-cell\');$(this).addClass(' + '\'selected-cell\'' + ')" class="color-cell" style="background-color:#' + colors[j] + '">' + 
+					'</div></td>';
+					if((j + 1) % 3 == 0) {
+						html += '</tr>';
+						open = false;
+					}
+				}
+				if(open) html += '</tr>';	
+				return html;
+			}
+
+			var colourTableHTML = prepareColourTable();
+
+			$("#cbtColourTable").html(colourTableHTML);
+
+			/*$('.playerContentWrapper').click(function(e) {
+				console.log("Player Content Wrapper was clicked");
+				e.stopPropagation();
+				/*$('#overlay').fadeIn(300);
+				$('#player').fadeIn(300);
+				$(this).children().toggle();
+			});*/
+
+			/*$('#playerContent').click(function(e) {
+				console.log("Player Content was clicked");
+				if (e.target !== this)
+    				return;
+    			console.log("Player Content was INDEED clicked");
+				$('#overlay').fadeOut(300);
+				$('#player').fadeOut(300);
+			});*/
+		</script>
+	</body>
+</html>

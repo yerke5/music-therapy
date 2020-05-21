@@ -1,0 +1,366 @@
+@font-face {
+	font-family: Trajan;
+	src: url("../fonts/Trajan Pro 3 Extralight.otf");
+}
+
+@font-face {
+	font-family: Bubbler;
+	src: url("../fonts/BubblerOne-Regular.ttf");
+}
+
+@font-face {
+	font-family: Quesha;
+	src: url("../fonts/Quesha.ttf");
+}
+
+@font-face {
+	font-family: Trajan Pro;
+	src: url("../fonts/trajan pro.ttf");
+}
+
+@font-face {
+	font-family: Raleway;
+	src: url("../fonts/Raleway-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Lato";
+	src: url("../fonts/Lato-Light.ttf") format("truetype");
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Lato";
+	src: url("../fonts/Lato-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	text-transform: initial;
+	font-family: Raleway
+}
+
+html, body {
+	height: 100%;
+}
+
+p, button, input, a {
+	font-family: Bubbler !important;
+	font-size:1em
+}
+
+a {
+	font-size: 1.3em
+}
+
+h1 {
+	font-family:Quesha !important;
+	color:#000077 !important
+}
+
+.row {
+	margin: 0 !important
+}
+
+#main {
+	height:100%;
+	width:100%;
+	display:table
+}
+
+#wrapper {
+	display: table-cell;
+	height:100%;
+	vertical-align:middle
+}
+
+#menuBtn {
+	margin-top: 5%;
+	margin-left: 5%;
+	color:#000077;
+	font-size:1.3em
+}
+
+.button {
+	border-radius: 5px;
+	width:100%;
+	display:block;
+	padding:15px;
+	font-family:Raleway;
+	background-color:#7ecef4;
+	border:none;
+	color:#000;
+	text-align:center
+}
+
+.prevBtn {
+	border-radius: 5px;
+	width:100%;
+	display:block;
+	padding:15px;
+	font-family:Raleway;
+	background-color:#ddd;
+	border:none;
+	color:#000;
+	text-align:center
+}
+
+#bottomMenu {
+	position: fixed;
+	background-color:#fff;/*#7ecef4;*/
+	bottom:0;
+	left: 0;
+	right: 0;
+	font-family:Bubbler;
+	z-index:2;
+	box-shadow: 0 0 20px #ccc;
+}
+
+#bottomMenu table {
+	width:100%;
+	table-layout:fixed;
+}
+
+.bottomMenuBtn {
+	color: #444;
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+#bottomMenu table tr td {
+	text-align:center;
+}
+
+.bottomMenuDesc {
+	font-size: 0.7em;
+    display: block;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.currentBottomMenuBtn {
+	/*background-color: white;*/
+    /*box-shadow: rgb(145, 145, 145) 0px 10px 10px*/
+}
+
+.currentBottomMenuBtn span {
+	color:#1e4eff;
+}
+
+.main {
+	height:100%;
+	width:100%;
+	display:table
+}
+
+.wrapper {
+	display: table-cell;
+	height:100%;
+	vertical-align:middle
+}
+
+#usernameForm {
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:100;
+	background-color:white;
+	min-height:640px;
+}
+
+.closeBtn {
+	position:absolute;
+	right: 20px;
+	top:20px;
+	font-size:1.5em;
+	color:#000077
+}
+
+/* SIDE MENU */
+
+#top {
+	text-align: left;
+	height: 60px;
+	margin:0;
+	background-color: white;
+	color: white;
+	font-family: Montserrat
+}
+
+
+#sideMenu {
+	width: 85%;
+	/*background-color: #c4e9fa;*/
+	background-color:#bbdefb;
+	position:absolute;
+	top:0;
+	bottom: 0;
+	left:0;
+	z-index:3;
+	display:none;
+}
+
+#sideMenuOverlay {
+	width:100%;
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	background-color: rgb(0, 0, 0, 0.5);
+	display:none;
+	z-index:3
+}
+
+#sideMenu a {
+    display: block;
+    font-size: 1.3em;
+    text-decoration: none;
+    color: #000;
+    width: 85%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+#sideMenu a span {
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+/*#sideMenu a {
+	display: block;
+    font-size: 1.3em;
+    text-decoration: none;
+    color: #000;
+    /* width: 85%; */
+    /*padding: 20px;
+    margin: 0 auto;
+    margin-top: 10px;
+    /* border-bottom: 0.5px solid #808080b8; */
+    /*background-color: #7ecef470;
+    /* border-radius: 5px; */
+    /* border: 0.5px solid #4a494952; */
+    /* box-shadow: 0 0 10px #499fe8; */
+    /* border-left: 3px solid #000077; */
+    /* border-right: 3px solid #000077;*/
+/*}*/
+
+.lines-button {
+    position: relative;
+    //float:right;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 56px;
+    height: 56px;
+    font-size: 0;
+    text-indent: -9999px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    border: none;
+    cursor: pointer;
+    -webkit-transition: background 0.3s;
+    transition: background 0.3s;
+}
+.lines-button:focus {
+    outline: none;
+}
+.lines-button span {
+    display: block;
+    position: absolute;
+    left: 12px;
+    right: 18px;
+    height: 2px;
+    background: #000077;
+    border-radius: 0.57143rem;
+}
+.lines-button span::before, .lines-button span::after {
+    position: absolute;
+    display: block;
+    left: 0;
+    height: 2px;
+    background-color: #000077;
+    border-radius: 0.57143rem;
+    content:"";
+}
+.lines-button span::before {
+    top: -10px;
+    width:110%;
+}
+.lines-button span::after {
+    bottom: -10px;
+    width:90%;
+}
+.lines {
+    background: none;
+}
+.lines span {
+    -webkit-transition: background 0s 0.3s;
+    transition: background 0s 0.3s;
+}
+.lines span::before, .lines span::after {
+    -webkit-transition-duration: 0.3s, 0.3s;
+    transition-duration: 0.3s, 0.3s;
+}
+.lines span::before {
+    -webkit-transition-property: top, -webkit-transform;
+    transition-property: top, transform;
+}
+.lines span::after {
+    -webkit-transition-property: bottom, -webkit-transform;
+    transition-property: bottom, transform;
+}
+.lines.close {
+    background: none;
+}
+.lines.close span {
+    visibility: hidden;
+}
+.lines.close span::before {
+    top: 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width:110%;
+    visibility: visible;
+    color:black;
+}
+.lines.close span::after {
+    bottom: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    width:110%;
+    visibility: visible;
+    color:black;
+}
+
+.active {
+  left: 0px;
+  transition: 0.5s all ease-in-out;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+input:focus {
+	outline: none
+}
+
+textarea {
+	padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid #ccc;
+    width: 100%;
+    height: 100px;
+}
